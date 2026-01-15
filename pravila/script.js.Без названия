@@ -1,0 +1,493 @@
+// --- 1. ПРОВЕРКА ТЕМЫ ДО ЗАГРУЗКИ (чтобы не было вспышки) ---
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+}
+
+// --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
+let currentItem = null,
+    selectedPrice = 0,
+    basePrice = 0,
+    quantity = 1,
+    currentPromoPercent = 0; // Добавляем
+
+// Вместо того что было у тебя в конце, используй это:
+const getPromoList = () => window.promoCodesList || [];
+// --- ВАЛИДАЦИЯ ---
+const validateNick = (n) => /^[A-Za-z][A-Za-z0-9_]{2,15}$/.test(n);
+const validateEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
+let slideIndex = 0;
+let slideInterval;
+const slides = document.querySelectorAll('.slide');
+const track = document.getElementById('slider-track');
+const dotsContainer = document.getElementById('slider-dots');
+
+function initSlider() {
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('slider-dots');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+
+    slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+
+        if (slides.length === 1) {
+            dot.classList.add('only-one');
+        }
+
+        dot.onclick = () => {
+            if (slides.length > 1) goToSlide(i);
+        };
+        dotsContainer.appendChild(dot);
+    });
+
+    if (slides.length <= 1) {
+        if (btnPrev) btnPrev.classList.add('disabled');
+        if (btnNext) btnNext.classList.add('disabled');
+    } else {
+        if (btnPrev) btnPrev.classList.remove('disabled');
+        if (btnNext) btnNext.classList.remove('disabled');
+        startAutoSlide();
+    }
+}
+
+// Чтобы анимация в кружке сбрасывалась и начиналась заново
+function updateDots() {
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === slideIndex);
+
+        // Маленький хак: перезапуск анимации
+        if (dot.classList.contains('active')) {
+            const content = dot.innerHTML;
+            dot.innerHTML = content;
+        }
+    });
+}
+
+function goToSlide(n) {
+    slideIndex = n;
+    if (slideIndex >= slides.length) slideIndex = 0;
+    if (slideIndex < 0) slideIndex = slides.length - 1;
+
+    track.style.transform = `translateX(-${slideIndex * 100}%)`;
+    updateDots();
+    startAutoSlide(); // Сбрасываем таймер при ручном переключении
+}
+
+function moveSlide(step) {
+    goToSlide(slideIndex + step);
+}
+
+function startAutoSlide() {
+    clearInterval(slideInterval);
+    if (slides.length > 1) {
+        slideInterval = setInterval(() => {
+            moveSlide(1);
+        }, 10000); // 5000 мс = время заполнения кружка в CSS
+    }
+}
+
+// --- 2. ЛОГИКА ТЕМЫ (Кнопка и сохранение) ---
+function initTheme() {
+    const themeBtn = document.getElementById('theme-btn');
+    if (!themeBtn) return;
+
+    const icon = themeBtn.querySelector('i');
+
+    // Устанавливаем иконку при загрузке
+    if (document.body.classList.contains('light-theme')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    themeBtn.onclick = () => {
+        const isLight = document.body.classList.toggle('light-theme');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+        if (isLight) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
+    };
+}
+
+function updatePriceDisplay() {
+    const el = document.getElementById('final-price');
+    if (!el) return;
+
+    // 1. Определяем базовую цену (с учетом количества)
+    let total = (currentItem && currentItem.type === 'quantity')
+                ? (basePrice * quantity)
+                : selectedPrice;
+
+    // 2. Применяем скидку, если она есть
+    if (currentPromoPercent > 0) {
+        total = Math.floor(total * (1 - currentPromoPercent / 100));
+    }
+
+    // 3. Выводим результат
+    el.innerText = total + " ₽";
+}
+
+// --- 3. ФИЛЬТРАЦИЯ ТОВАРОВ ---
+function filter() {
+    const q = document.getElementById('shop-search').value.toLowerCase();
+    const activeItem = document.querySelector('.cat-item.active');
+    const cards = document.querySelectorAll('.item-card');
+    const displayName = document.getElementById('cat-display-name');
+
+    if (!activeItem) return;
+
+    const activeCat = activeItem.dataset.cat;
+    // Убираем "Загрузка..." и ставим имя категории
+    if (displayName) {
+        displayName.innerText = activeItem.innerText.trim() + ':';
+    }
+
+    cards.forEach(card => {
+        const matches = card.dataset.name.includes(q) &&
+                       (activeCat === 'all' || card.dataset.category === activeCat);
+
+        if (matches) {
+            card.style.display = 'flex';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 50);
+        } else {
+            card.style.display = 'none';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(10px)';
+        }
+    });
+}
+
+// --- 4. МОДАЛЬНЫЕ ОКНА ---
+function openModal(item) {
+    currentItem = item;
+    quantity = 1;
+    document.getElementById('modal').style.display = 'flex';
+
+    const slider = document.getElementById('steps-slider');
+    const backBtn = document.getElementById('back-btn');
+    const qtyWrapper = document.getElementById('qty-wrapper');
+    const qtyRow = document.querySelector('.qty-row-new');
+
+    document.querySelectorAll('.input-field').forEach(i => i.classList.remove('invalid'));
+    if (qtyRow) qtyRow.classList.remove('invalid');
+    slider.style.transition = 'none';
+
+    if (item.type === 'period') {
+        renderPrices(item);
+        if (backBtn) backBtn.style.display = 'block';
+        if (qtyWrapper) qtyWrapper.style.display = 'none';
+        showStep(1);
+    } else {
+        basePrice = item.price;
+        selectedPrice = basePrice;
+        document.getElementById('qty-num-input').value = '1';
+        if (backBtn) backBtn.style.display = 'none';
+        if (qtyWrapper) qtyWrapper.style.display = (item.type === 'quantity' ? 'block' : 'none');
+        showStep(2);
+    }
+
+    setTimeout(() => {
+        slider.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    }, 50);
+    updatePriceDisplay();
+}
+
+function renderPrices(item) {
+    const container = document.getElementById('prices-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // 1. Превращаем объект { "30 дней": 19, ... } в массив массивов [ ["30 дней", 19], ... ]
+    // 2. Сортируем массив по второму элементу (цене) — b[1] - a[1] для убывания, a[1] - b[1] для возрастания
+    const sortedPrices = Object.entries(item.prices).sort((a, b) => a[1] - b[1]);
+
+    sortedPrices.forEach(([name, val], i) => {
+        const div = document.createElement('div');
+        div.className = 'price-box' + (i === 0 ? ' active' : '');
+
+        if(i === 0) {
+            selectedPrice = val;
+            currentItem._selectedIdx = i;
+        }
+
+        div.onclick = () => {
+            document.querySelectorAll('.price-box').forEach(b => b.classList.remove('active'));
+            div.classList.add('active');
+            selectedPrice = val;
+            currentItem._selectedIdx = i;
+            updatePriceDisplay();
+        };
+
+        div.innerHTML = `<span>${name}</span><b>${formatPrice(val)}</b>`;
+        container.appendChild(div);
+    });
+}
+
+function openInfoModal(item) {
+    const modal = document.getElementById('info-modal');
+    const title = document.getElementById('info-title');
+    const text = document.getElementById('info-text');
+
+    if (title) title.innerText = item.name;
+    // Описание берется из массива в settings.json и соединяется переносом строки
+    if (text) text.innerHTML = item.description.join('<br>');
+
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+}
+
+// --- 5. КОЛИЧЕСТВО ---
+function onQtyInput(el) {
+    let val = el.value.trim();
+    let n = Number(val);
+    let isValid = val !== "" && Number.isInteger(n) && n > 0;
+
+    const qtyRow = document.querySelector('.qty-row-new');
+    if (qtyRow) qtyRow.classList.toggle('invalid', !isValid);
+
+    if (isValid) {
+        quantity = n;
+        selectedPrice = basePrice * quantity;
+        updatePriceDisplay();
+    }
+}
+
+function updateQty(step) {
+    let input = document.getElementById('qty-num-input');
+    if (!input) return;
+    let current = parseInt(input.value) || 1;
+    let next = Math.max(1, current + step);
+    input.value = next;
+    onQtyInput(input);
+}
+
+// --- 6. ОПЛАТА ---
+function sendPayment() {
+    const nick = document.getElementById('p-nickname');
+    const email = document.getElementById('p-email');
+    const promo = document.getElementById('p-promo');
+    const qtyRow = document.querySelector('.qty-row-new');
+
+    // Валидация полей перед отправкой
+    const isNickOk = validateNick(nick.value);
+    const isEmailOk = validateEmail(email.value);
+    const isQtyOk = qtyRow ? !qtyRow.classList.contains('invalid') : true;
+
+    nick.classList.toggle('invalid', !isNickOk);
+    email.classList.toggle('invalid', !isEmailOk);
+
+    if (!isNickOk || !isEmailOk || !isQtyOk) return;
+
+    // 1. Получаем ID товара из вашего объекта currentItem (загруженного из JSON)
+    let finalId = Array.isArray(currentItem.id) ?
+                  currentItem.id[currentItem._selectedIdx || 0] :
+                  currentItem.id;
+
+    // 2. Определяем количество: для типа 'quantity' берем из инпута, иначе всегда 1
+    let finalQty = (currentItem.type === 'quantity') ?
+                   (parseInt(document.getElementById('qty-num-input').value) || 1) : 1;
+
+    // Формируем строку товаров в формате id:count для метода buyItems
+    const itemsString = `${finalId}:${finalQty}`;
+
+    console.log("Запрос на создание корзины:", itemsString);
+
+    // 3. Отправляем запрос на ваш сервер (app.py)
+    fetch('/create_payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            buyer: nick.value.trim(),
+            items: itemsString,
+            coupon: promo.value.trim(),
+            email: email.value.trim()
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success && data.cart_id) {
+            // 4. Формируем URL для перехода на оплату
+            // Передаем cart_id и URL возврата, чтобы не было ошибки "Не указан url успешной оплаты"
+            const baseUrl = 'https://pay.trademc.org/';
+            const successUrl = 'https://nullx.su/success';
+            const failUrl = 'https://nullx.su/success';
+
+            const finalPayUrl = `${baseUrl}?cart_id=${data.cart_id}` +
+                                `&success_url=${encodeURIComponent(successUrl)}` +
+                                `&fail_url=${encodeURIComponent(failUrl)}`;
+
+            // Перенаправляем пользователя
+            window.location.href = finalPayUrl;
+        } else {
+            alert("Ошибка при создании платежа: " + (data.error || "неизвестная ошибка"));
+        }
+    })
+    .catch(err => {
+        console.error("Ошибка сети:", err);
+        alert("Не удалось связаться с сервером оплаты.");
+    });
+}
+
+// --- 7. ВСПОМОГАТЕЛЬНОЕ ---
+
+
+function showStep(s) {
+    const slider = document.getElementById('steps-slider');
+    if (slider) slider.style.transform = s === 1 ? 'translateX(0)' : 'translateX(-50%)';
+}
+
+function nextStep() { showStep(2); }
+function prevStep() { showStep(1); }
+
+function formatPrice(rubAmount) {
+    return `${rubAmount} ₽`;
+}
+
+function initPromoLogic() {
+    const promoInput = document.getElementById('p-promo');
+    if (!promoInput) return;
+
+    promoInput.oninput = function() {
+        const code = this.value.trim().toUpperCase();
+        const promoList = getPromoList();
+
+        // Если поле пустое — сбрасываем скидку и выходим
+        if (code === "") {
+            this.style.borderColor = '';
+            currentPromoPercent = 0;
+            updatePriceDisplay();
+            return;
+        }
+
+        const found = promoList.find(p => p.code === code);
+
+        if (found) {
+            this.style.borderColor = '#2ed573'; // Зеленый если верный
+            currentPromoPercent = found.percent;
+        } else {
+            this.style.borderColor = '#ff4b4b'; // Красный если неверный (опционально)
+            currentPromoPercent = 0;
+        }
+        updatePriceDisplay(); // Пересчитываем цену
+    };
+}
+
+
+
+
+
+// --- 8. ЗАПУСК ---
+// --- 8. ЗАПУСК ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Инициализация базовых систем
+    initTheme();
+    initSlider();
+    initPromoLogic();
+
+    // 1. Работа с категориями
+    const catButtons = document.querySelectorAll('.cat-item');
+
+    // Удаляем вкладку "Все товары", если она затесалась
+    const allTab = document.querySelector('.cat-item[data-cat="all"]');
+    if (allTab) allTab.remove();
+
+    // Настраиваем клики по категориям
+    catButtons.forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll('.cat-item').forEach(x => x.classList.remove('active'));
+            btn.classList.add('active');
+            filter(); // При клике обновляем список и заголовок
+        };
+    });
+
+    // МГНОВЕННЫЙ ЗАПУСК: Активируем первую категорию и убираем "Загрузка..."
+    const firstCat = document.querySelector('.cat-item');
+    if (firstCat) {
+        firstCat.classList.add('active');
+        filter(); // Вызов функции сразу пропишет имя категории в заголовок
+    }
+
+    // 2. Поиск
+    const searchInput = document.getElementById('shop-search');
+    if (searchInput) {
+        searchInput.oninput = filter;
+    }
+
+    // 3. Закрытие модалок по клику на фон (overlay)
+    window.onclick = e => {
+        if (e.target.classList.contains('modal-overlay')) {
+            closeModal();
+        }
+    };
+
+    // 4. Живая проверка полей ввода (Ник и Email)
+    const nickInp = document.getElementById('p-nickname');
+    const emailInp = document.getElementById('p-email');
+
+    if (nickInp) {
+        nickInp.oninput = () => {
+            nickInp.classList.toggle('invalid', !validateNick(nickInp.value) && nickInp.value !== "");
+        };
+    }
+    if (emailInp) {
+        emailInp.oninput = () => {
+            emailInp.classList.toggle('invalid', !validateEmail(emailInp.value) && emailInp.value !== "");
+        };
+    }
+
+    // 5. Инициализация летающих частиц (Particles.js)
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#86868b" },
+                "shape": { "type": "circle" },
+                "opacity": {
+                    "value": 0.3,
+                    "random": true,
+                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": { "enable": false }
+                },
+                "line_linked": { "enable": false },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "bubble" },
+                    "onclick": { "enable": false }
+                },
+                "modes": {
+                    "bubble": { "distance": 200, "size": 6, "duration": 2, "opacity": 0.5 }
+                }
+            },
+            "retina_detect": true
+        });
+    }
+});
