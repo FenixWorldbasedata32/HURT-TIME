@@ -668,8 +668,9 @@ body.light-theme .online-status {
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
+    object-fit: contain;
+    object-position: center;
+    background: #0b0b10; /* чтобы не было пустоты по бокам */
 }
 
 .slider-track {
@@ -1015,9 +1016,5 @@ body.dark-theme .info-btn img {
     }
 
 }
-.hide_ghd{
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
+
 
