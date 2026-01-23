@@ -1018,3 +1018,8 @@ body.dark-theme .info-btn img {
     }
 
 }
+.hide_ghd{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
