@@ -668,9 +668,8 @@ body.light-theme .online-status {
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center;
-    background: #0b0b10; /* чтобы не было пустоты по бокам */
+    object-fit: cover;
+    display: block;
 }
 
 .slider-track {
@@ -1014,7 +1013,4 @@ body.dark-theme .info-btn img {
         width: 90%;
         padding: 25px;
     }
-
 }
-
-
