@@ -670,6 +670,9 @@ body.light-theme .online-status {
     height: 100%;
     object-fit: cover;
     display: block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .slider-track {
@@ -1013,4 +1016,5 @@ body.dark-theme .info-btn img {
         width: 90%;
         padding: 25px;
     }
+
 }
