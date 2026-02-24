@@ -139,7 +139,7 @@ function updatePriceDisplay() {
 function filter() {
     const q = document.getElementById('shop-search').value.toLowerCase();
     const activeItem = document.querySelector('.cat-item.active');
-    const cards = document.querySelectorAll('.item-card');
+    const cards = document.querySelectorAll('.item-card, .info-dashboard');
     const displayName = document.getElementById('cat-display-name');
 
     if (!activeItem) return;
@@ -151,7 +151,8 @@ function filter() {
     }
 
     cards.forEach(card => {
-        const matches = card.dataset.name.includes(q) &&
+        const nameStr = card.dataset.name || '';
+        const matches = nameStr.toLowerCase().includes(q) &&
                        (activeCat === 'all' || card.dataset.category === activeCat);
 
         if (matches) {
