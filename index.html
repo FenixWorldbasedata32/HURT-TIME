@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)#shop -->
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        body {
+            transition: opacity ease-in 0.2s;
+        }
+
+        body[unresolved] {
+            opacity: 0;
+            display: block;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index/style.css">
+    <link rel="stylesheet" href="./index/all.min.css">
+    <link rel="icon" type="image/x-icon" href="227759p08l47np6t4zyt.jpg">
+    <title>Главная — NURY-TIME</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="chrome-extension://ihcjicgdanjaechkgeegckofjjedodee/app/content-style.css">
+</head>
+
+<body>
+    <div id="particles-js"><canvas class="particles-js-canvas-el" width="1905" height="1065"
+            style="width: 100%; height: 100%;"></canvas></div>
+    <script src="./index/particles.min.js.Без названия"></script>
+    <div class="theme-toggle-fixed" id="theme-btn">
+        <i class="fa fa-moon"></i>
+    </div>
+
+    <header>
+        <a href="#" style="display: flex; align-items: center;">
+            <img src="./index/logo.png" class="logo-img" alt="NULLX">
+        </a>
+        <nav style="display:flex; gap:35px;">
+            <a href="#shop" style="color:var(--text-main); text-decoration:none; font-weight:600;">Магазин</a>
+            <a href="pravila.html" style="color:var(--text-dim); text-decoration:none;">Правила</a>
+            <a href="#" style="color:var(--text-dim); text-decoration:none;">Discord</a>
+        </nav>
+        <div class="online-status">
+            <div class="pulse-dot"></div>
+            Онлайн: 0
+        </div>
+    </header>
+    <section class="promo-slider">
+        <div class="slider-container">
+            <div class="slider-track" id="slider-track" style="transform: translateX(-100%);">
+
+                <div class="slide">
+                    <img src="./index/IMG_6182.jpg" alt="Promo">
+                </div>
+
+                <div class="slide">
+                    <img src="./index/IMG_6176.jpg" alt="Promo">
+                </div>
+
+            </div>
+
+            <button class="slider-btn prev" id="btn-prev" onclick="moveSlide(-1)">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+
+            <button class="slider-btn next" id="btn-next" onclick="moveSlide(1)">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+
+            <div class="slider-dots" id="slider-dots">
+                <div class="dot"></div>
+                <div class="dot active"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="shop-wrapper" id="shop">
+        <div class="shop-sidebar">
+            <div class="side-label">Категории</div>
+            <div class="category-list">
+
+
+
+                <div class="cat-item active" data-cat="Привилегии">
+                    <img src="./index/Привилегии.png"> Информация
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="cat-item " data-cat="Игровая валюта">
+                    <img src="./index/Игровая валюта.png"> Механики
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="cat-item " data-cat="Кейс с донатом">
+                    <img src="./index/Кейс с донатом.png"> Ивенты
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="cat-item " data-cat="Кейс с аметринами">
+                    <img src="./index/Кейс с аметринами.png"> Лайт Анархия
+                </div>
+
+
+
+
+
+
+
+
+                <div class="cat-item " data-cat="Кейс с титулами">
+                    <img src="./index/Кейс с титулами.png"> Анархия
+                </div>
+
+
+
+
+
+
+
+
+                <div class="cat-item " data-cat="Всё или ничего">
+                    <img src="./index/Всё или ничего.png"> Соц сети
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="cat-item " data-cat="Разное">
+                    <img src="./index/bot.png"> Боты
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <div class="shop-main">
+            <div class="shop-controls-row">
+                <h2 class="shop-title" id="cat-display-name">Информация:</h2>
+                <div class="search-wrap">
+                    <i class="fa fa-search" style="color:var(--accent)"></i>
+                    <input type="text" id="shop-search" placeholder="Поиск информации...">
+                </div>
+            </div>
+
+            <div class="items-grid" id="items-container">
+
+
+                <div class="info-dashboard" data-category="Привилегии"
+                    style="grid-column: 1 / -1; width: 100%; max-width: 800px; margin: 0 auto; background: #1a1025; border: 2px solid #5a32a8; border-radius: 12px; padding: 25px; color: #ffffff; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 0 20px rgba(90, 50, 168, 0.5), inset 0 0 10px rgba(90, 50, 168, 0.2); position: relative; font-family: 'Inter', sans-serif;">
+
+                    <!-- Close button (visual only to match screenshot) -->
+
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 5px;"
+                        data-category="Привилегии">
+                        <div>
+                            <h1
+                                style="margin: 0; font-size: 2.2em; font-weight: 800; letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);">
+                                NuryTime</h1>
+                            <p style="margin: 5px 0 0; color: #a29bfe; font-size: 1.1em; text-align: center;">Minecraft
+                                сервер</p>
+                        </div>
+                    </div>
+
+                    <!-- Line separator -->
+                    <div data-category="Привилегии"
+                        style="width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(140, 82, 255, 0.5), transparent); margin-bottom: 5px; box-shadow: 0 0 5px rgba(140, 82, 255, 0.5);">
+                    </div>
+
+                    <!-- Top row: Mode and Version -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;" data-category="Привилегии">
+                        <div
+                            style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 15px 20px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 15px;">
+                            <i class="fa-solid fa-khanda" style="font-size: 1.5em; color: #ff9f43;"></i>
+                            <span style="font-size: 1.1em; color: #dcdde1;">Режим: <strong
+                                    style="color: #ffffff;">Анархия</strong></span>
+                        </div>
+                        <div data-category="Привилегии"
+                            style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 15px 20px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 15px;">
+                            <i class="fa-solid fa-location-dot" style="font-size: 1.5em; color: #fd79a8;"></i>
+                            <span style="font-size: 1.1em; color: #dcdde1;">Версия: <strong
+                                    style="color: #ffffff;">1.16.5 — 1.21.5</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Grid for features, donat, contacts -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;" data-category="Привилегии">
+
+                        <div style="display: flex; flex-direction: column; gap: 15px;" data-category="Привилегии">
+                            <!-- Особенности -->
+                            <div
+                                style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); flex-grow: 1;">
+                                <h3
+                                    style="margin-top: 0; display: flex; align-items: center; gap: 10px; color: #ffc048; font-size: 1.2em; margin-bottom: 15px;">
+                                    <i class="fa-solid fa-fire"></i> Особенности:
+                                </h3>
+                                <ul
+                                    style="list-style-type: none; margin: 0; padding: 0; color: #dcdde1; line-height: 1.8; font-size: 1.05em;">
+                                    <li><span style="color: rgba(255,255,255,0.3); margin-right: 8px;">•</span>Cвои
+                                        механики</li>
+                                    <li><span style="color: rgba(255,255,255,0.3); margin-right: 8px;">•</span>Активная
+                                        Экономика</li>
+                                    <li><span style="color: rgba(255,255,255,0.3); margin-right: 8px;">•</span>Есть
+                                        /free</li>
+                                    <li><span style="color: rgba(255,255,255,0.3); margin-right: 8px;">•</span>2 Режима
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Донат -->
+                            <div data-category="Привилегии"
+                                style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); flex-grow: 1;">
+                                <h3
+                                    style="margin-top: 0; display: flex; align-items: center; gap: 10px; color: #f5cd79; font-size: 1.2em; margin-bottom: 15px;">
+                                    <i class="fa-solid fa-crown"></i> Донат:
+                                </h3>
+                                <ul
+                                    style="list-style-type: none; margin: 0; padding: 0; color: #dcdde1; line-height: 1.8; font-size: 1.05em;">
+                                    <li><span style="color: rgba(255,255,255,0.2); margin-right: 8px;">—</span>Дешёвые
+                                        цены</li>
+                                    <li><span style="color: rgba(255,255,255,0.2); margin-right: 8px;">—</span>Много
+                                        возможностей</li>
+                                    <li><span style="color: rgba(255,255,255,0.2); margin-right: 8px;">—</span>Хорошие
+                                        кит наборы</li>
+                                    <li><span
+                                            style="color: rgba(255,255,255,0.2); margin-right: 8px;">—</span>Возможность
+                                        получить бесплатно</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Контакты -->
+                        <div style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column;"
+                            data-category="Привилегии">
+                            <h3 style=" margin-top: 0; display: flex; align-items: center; gap: 10px; color: #a29bfe;
+                            font-size: 1.2em; margin-bottom: 15px;">
+                                <i class="fa-solid fa-magnifying-glass"></i> Контакты:
+                            </h3>
+                            <div
+                                style="display: flex; flex-direction: column; gap: 12px; color: #ffffff; font-size: 1.05em; flex-grow: 1; justify-content: flex-start;">
+                                <div
+                                    style="display: flex; align-items: center; gap: 12px; background: rgba(114, 137, 218, 0.1); padding: 12px 15px; border-radius: 6px;">
+                                    <i class="fa-brands fa-discord"
+                                        style="color: #7289da; font-size: 1.3em; width: 24px; text-align: center;"></i>
+                                    <span>Discord: <a href="https://dsc.gg/nurytime" target="_blank"
+                                            style="color: #7289da; text-decoration: none; font-weight: 500;">dsc.gg/nurytime</a></span>
+                                </div>
+                                <div
+                                    style="display: flex; align-items: center; gap: 12px; background: rgba(0, 136, 204, 0.1); padding: 12px 15px; border-radius: 6px;">
+                                    <i class="fa-brands fa-telegram"
+                                        style="color: #0088cc; font-size: 1.3em; width: 24px; text-align: center;"></i>
+                                    <span>Telegram: <a href="https://t.me/NuryTime" target="_blank"
+                                            style="color: #0088cc; text-decoration: none; font-weight: 500;">t.me/NuryTime</a></span>
+                                </div>
+                                <div
+                                    style="display: flex; align-items: center; gap: 12px; background: rgba(209, 204, 130, 0.1); padding: 12px 15px; border-radius: 6px;">
+                                    <i class="fa-solid fa-cube"
+                                        style="color: #d1cc82; font-size: 1.3em; width: 24px; text-align: center;"></i>
+                                    <span style="color: #dcdde1;">IP: <strong
+                                            style="color: #d1cc82;">NuryTime.mcmod.ru</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--конец информации о сервере -->
+                <!-- начало механики -->
+                <div class="info-dashboard" data-category="Игровая валюта"
+                    style="display: none; grid-column: 1 / -1; width: 100%; max-width: 700px; margin: 0 auto; background: #1a1025; border: 2px solid #5a32a8; border-radius: 16px; padding: 50px 30px; color: #ffffff; text-align: center; box-shadow: 0 0 30px rgba(90, 50, 168, 0.4), inset 0 0 15px rgba(90, 50, 168, 0.15); font-family: 'Inter', sans-serif;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">⚙️</div>
+                    <h2
+                        style="margin: 0 0 15px; font-size: 2em; font-weight: 800; color: #ffffff; text-shadow: 0 0 12px rgba(162, 155, 254, 0.5);">
+                        Технические работы</h2>
+                    <div
+                        style="width: 80px; height: 3px; background: linear-gradient(90deg, #5a32a8, #a29bfe); border-radius: 2px; margin: 0 auto 20px;">
+                    </div>
+                    <p style="margin: 0; color: #a29bfe; font-size: 1.15em; line-height: 1.7;">Этот раздел временно
+                        недоступен.<br>Мы уже работаем над ним — загляни позже! 🚀</p>
+                </div>
+                <!--конец механики и начало ивентов -->
+                <div class="item-card" data-name="Маяк Убийца" data-category="Кейс с донатом"
+                    style="display: none; opacity: 0; transform: translateY(10px);">
+
+                    <div class="img-container" style="margin-bottom: 0 !important;">
+                        <img src="./index/2026-02-09_010731.png">
+                    </div>
+
+                    <div class="item-info-footer" style="margin-top: 10px !important;">
+                        <h3>Маяк Убийца</h3>
+
+                        <div class="item-description"
+                            style="color: var(--text-dim); font-size: 0.9em; margin-bottom: 10px;">
+                            <p>Мощный механизм, который наносит урон всем живым существам в радиусе действия. Будьте
+                                осторожны при приближении к этому смертоносному устройству!</p>
+                            <br>
+                            <p><strong>Эффект:</strong> Наносит урон в радиусе</p>
+                            <p><strong>Награда:</strong> Редкие блоки и материалы</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card" data-name="Сундук Смерти" data-category="Кейс с донатом"
+                    style="display: none; opacity: 0; transform: translateY(5px);">
+
+
+                    <div class="img-container" style="margin-bottom: 0 !important;">
+                        <img src="./index/2026-02-09_011211.png">
+                    </div>
+
+                    <div class="item-info-footer" style="margin-top: 10px !important;">
+                        <h3>Сундук Смерти</h3>
+
+                        <div class="item-description"
+                            style="color: var(--text-dim); font-size: 0.9em; margin-bottom: 5px;">
+                            <p>Загадочный сундук, который может содержать как бесценные сокровища, так и смертельные
+                                ловушки. Решитесь ли вы открыть его?</p>
+                            <br>
+                            <p><strong>Риск:</strong> Может содержать ловушки</p>
+                            <p><strong>Награда:</strong> Ценные предметы или опасность</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card" data-name="Вулкан" data-category="Кейс с донатом"
+                    style="display: none; opacity: 0; transform: translateY(10px);">
+
+                    <div class="img-container" style="margin-bottom: 0 !important;">
+                        <img src="./index/2026-02-09_010628.png">
+                    </div>
+
+                    <div class="item-info-footer" style="margin-top: 10px !important;">
+                        <h3>Вулкан</h3>
+
+                        <div class="item-description"
+                            style="color: var(--text-dim); font-size: 0.9em; margin-bottom: 10px;">
+                            <p>Извергающийся вулкан приносит разрушения, но также редкие материалы для смелых искателей
+                                приключений, готовых рискнуть.</p>
+                            <br>
+                            <p><strong>Опасность:</strong> Лава и огонь</p>
+                            <p><strong>Награда:</strong> Обсидиан и редкие руды</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card" data-name="Мистический Сундук" data-category="Кейс с донатом"
+                    style="display: none; opacity: 0; transform: translateY(10px);">
+
+
+                    <div class="img-container" style="margin-bottom: 0 !important;">
+                        <img src="./index/2026-02-09_011116.png">
+                    </div>
+
+                    <div class="item-info-footer" style="margin-top: 10px !important;">
+                        <h3>Мистический Сундук</h3>
+
+                        <div class="item-description"
+                            style="color: var(--text-dim); font-size: 0.9em; margin-bottom: 10px;">
+                            <p>Магический сундук, наполненный древними артефактами и зачарованными предметами невиданной
+                                силы. Источник могущественной магии.</p>
+                            <br>
+                            <p><strong>Содержимое:</strong> Зачарованные предметы</p>
+                            <p><strong>Награда:</strong> Артефакты и магические вещи</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card" data-name="Метеорит" data-category="Кейс с донатом"
+                    style="display: none; opacity: 0; transform: translateY(10px);">
+
+                    <div class="img-container" style="margin-bottom: 0 !important;">
+                        <img src="./index/2026-02-09_010948.png">
+                    </div>
+
+                    <div class="item-info-footer" style="margin-top: 10px !important;">
+                        <h3>Метеорит</h3>
+
+                        <div class="item-description"
+                            style="color: var(--text-dim); font-size: 0.9em; margin-bottom: 10px;">
+                            <p>Падающий с неба метеорит создает кратер и оставляет после себя редкие космические
+                                материалы, которые нельзя найти нигде еще.</p>
+                            <br>
+                            <p><strong>Эффект:</strong> Создает кратер при падении</p>
+                            <p><strong>Награда:</strong> Космические материалы</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card" data-name="Мистический Алтарь" data-category="Кейс с донатом"
+                    style="display: none; opacity: 0; transform: translateY(10px);">
+
+                    <div class="img-container" style="margin-bottom: 0 !important;">
+                        <img src="./index/2026-02-09_010847.png">
+                    </div>
+
+                    <div class="item-info-footer" style="margin-top: 10px !important;">
+                        <h3>Мистический Алтарь</h3>
+
+                        <div class="item-description"
+                            style="color: var(--text-dim); font-size: 0.9em; margin-bottom: 10px;">
+                            <p>Древний алтарь, излучающий магическую энергию. Используйте его для создания мощных
+                                зачарований и улучшения своего снаряжения.</p>
+                            <br>
+                            <p><strong>Функция:</strong> Улучшение предметов</p>
+                            <p><strong>Награда:</strong> Мощные зачарования</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-dashboard" data-category="Кейс с аметринами"
+                    style="display: none; grid-column: 1 / -1; width: 100%; max-width: 700px; margin: 0 auto; background: #1a1025; border: 2px solid #5a32a8; border-radius: 16px; padding: 50px 30px; color: #ffffff; text-align: center; box-shadow: 0 0 30px rgba(90, 50, 168, 0.4), inset 0 0 15px rgba(90, 50, 168, 0.15); font-family: 'Inter', sans-serif;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">⚙️</div>
+                    <h2
+                        style="margin: 0 0 15px; font-size: 2em; font-weight: 800; color: #ffffff; text-shadow: 0 0 12px rgba(162, 155, 254, 0.5);">
+                        Технические работы</h2>
+                    <div
+                        style="width: 80px; height: 3px; background: linear-gradient(90deg, #5a32a8, #a29bfe); border-radius: 2px; margin: 0 auto 20px;">
+                    </div>
+                    <p style="margin: 0; color: #a29bfe; font-size: 1.15em; line-height: 1.7;">Этот раздел временно
+                        недоступен.<br>Мы уже работаем над ним — загляни позже! 🚀</p>
+                </div>
+
+                <div class="info-dashboard" data-category="Кейс с титулами"
+                    style="display: none; grid-column: 1 / -1; width: 100%; max-width: 700px; margin: 0 auto; background: #1a1025; border: 2px solid #5a32a8; border-radius: 16px; padding: 50px 30px; color: #ffffff; text-align: center; box-shadow: 0 0 30px rgba(90, 50, 168, 0.4), inset 0 0 15px rgba(90, 50, 168, 0.15); font-family: 'Inter', sans-serif;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">⚙️</div>
+                    <h2
+                        style="margin: 0 0 15px; font-size: 2em; font-weight: 800; color: #ffffff; text-shadow: 0 0 12px rgba(162, 155, 254, 0.5);">
+                        Технические работы</h2>
+                    <div
+                        style="width: 80px; height: 3px; background: linear-gradient(90deg, #5a32a8, #a29bfe); border-radius: 2px; margin: 0 auto 20px;">
+                    </div>
+                    <p style="margin: 0; color: #a29bfe; font-size: 1.15em; line-height: 1.7;">Этот раздел временно
+                        недоступен.<br>Мы уже работаем над ним — загляни позже! 🚀</p>
+                </div>
+
+                <div class="info-dashboard" data-category="Всё или ничего"
+                    style="display: none; grid-column: 1 / -1; width: 100%; max-width: 700px; margin: 0 auto; background: #1a1025; border: 2px solid #5a32a8; border-radius: 16px; padding: 50px 30px; color: #ffffff; text-align: center; box-shadow: 0 0 30px rgba(90, 50, 168, 0.4), inset 0 0 15px rgba(90, 50, 168, 0.15); font-family: 'Inter', sans-serif;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">⚙️</div>
+                    <h2
+                        style="margin: 0 0 15px; font-size: 2em; font-weight: 800; color: #ffffff; text-shadow: 0 0 12px rgba(162, 155, 254, 0.5);">
+                        Технические работы</h2>
+                    <div
+                        style="width: 80px; height: 3px; background: linear-gradient(90deg, #5a32a8, #a29bfe); border-radius: 2px; margin: 0 auto 20px;">
+                    </div>
+                    <p style="margin: 0; color: #a29bfe; font-size: 1.15em; line-height: 1.7;">Этот раздел временно
+                        недоступен.<br>Мы уже работаем над ним — загляни позже! 🚀</p>
+                </div>
+
+                <div class="info-dashboard" data-category="Разное"
+                    style="display: none; grid-column: 1 / -1; width: 100%; max-width: 700px; margin: 0 auto; background: #1a1025; border: 2px solid #5a32a8; border-radius: 16px; padding: 50px 30px; color: #ffffff; text-align: center; box-shadow: 0 0 30px rgba(90, 50, 168, 0.4), inset 0 0 15px rgba(90, 50, 168, 0.15); font-family: 'Inter', sans-serif;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">⚙️</div>
+                    <h2
+                        style="margin: 0 0 15px; font-size: 2em; font-weight: 800; color: #ffffff; text-shadow: 0 0 12px rgba(162, 155, 254, 0.5);">
+                        Технические работы</h2>
+                    <div
+                        style="width: 80px; height: 3px; background: linear-gradient(90deg, #5a32a8, #a29bfe); border-radius: 2px; margin: 0 auto 20px;">
+                    </div>
+                    <p style="margin: 0; color: #a29bfe; font-size: 1.15em; line-height: 1.7;">Этот раздел временно
+                        недоступен.<br>Мы уже работаем над ним — загляни позже! 🚀</p>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <script>
+            window.promoCodesList = [{ "code": "START", "percent": 10 }, { "code": "NULLX", "percent": 20 }];
+        </script>
+
+        <div id="modal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="close-modal-btn" onclick="closeModal()"><i class="fa fa-times"></i></div>
+                <div class="modal-side-img"></div>
+                <div class="modal-main">
+                    <div class="steps-window">
+                        <div class="steps-slider" id="steps-slider">
+                            <div class="step" id="step-1">
+                                <h2>Оформление</h2>
+                                <div id="prices-container" style="flex:1; overflow-y:auto; padding-right: 5px;"></div>
+                                <div class="modal-footer">
+                                    <button class="pay-btn-final" onclick="nextStep()">Продолжить</button>
+                                </div>
+                            </div>
+                            <div class="step" id="step-2">
+                                <h2>Оформление</h2>
+                                <div class="step-content" style="flex:1; overflow-y:auto; padding-right: 5px;">
+                                    <div class="input-wrapper">
+                                        <div class="input-group"><i class="fa fa-user"></i>
+                                            <input type="text" id="p-nickname" class="input-field"
+                                                placeholder="Ваш никнейм">
+                                        </div>
+                                        <div class="error-msg" id="err-nick"></div>
+                                    </div>
+
+                                    <div class="input-wrapper">
+                                        <div class="input-group"><i class="fa fa-envelope"></i>
+                                            <input type="email" id="p-email" class="input-field"
+                                                placeholder="Ваш Email">
+                                        </div>
+                                        <div class="error-msg" id="err-email"></div>
+                                    </div>
+
+                                    <div class="input-wrapper">
+                                        <div class="input-group"><i class="fa fa-percentage"></i>
+                                            <input type="text" id="p-promo" class="input-field"
+                                                placeholder="Промокод (если есть)">
+                                        </div>
+                                    </div>
+
+                                    <div id="qty-wrapper" style="display:none; width: 100%; margin-top: 8px;">
+                                        <div class="qty-row-new">
+                                            <div class="qty-icon-label">
+                                                <i class="fa fa-layer-group"></i>
+                                                <span class="qty-label-text">Количество</span>
+                                            </div>
+
+                                            <div class="qty-input-container" id="qty-container">
+                                                <button class="qty-btn" onclick="updateQty(-1)">−</button>
+                                                <div class="qty-input-wrapper">
+                                                    <input type="text" id="qty-num-input" class="qty-num-input"
+                                                        oninput="onQtyInput(this)" value="1">
+                                                    <div class="qty-underline"></div>
+                                                </div>
+                                                <button class="qty-btn" onclick="updateQty(1)">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <div class="price-summary">
+                                        <span>К оплате:</span>
+                                        <span id="final-price" class="summary-value">0 ₽</span>
+                                    </div>
+                                    <button class="pay-btn-final" id="pay-submit"
+                                        onclick="sendPayment()">Оплатить</button>
+                                    <div id="back-btn" onclick="prevStep()">Назад</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="info-modal" class="modal-overlay">
+            <div class="modal-info-box">
+                <div class="close-modal-btn" onclick="closeModal()"><i class="fa fa-times"></i></div>
+                <h2 id="info-title"></h2>
+                <div class="info-desc-content" id="info-text"></div>
+            </div>
+        </div>
+        <script src="./index/script.js.Без названия"></script>
+
+
+</body>
+
+</html>
